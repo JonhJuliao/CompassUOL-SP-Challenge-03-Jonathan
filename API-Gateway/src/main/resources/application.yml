@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway #erro
+  cloud:
+    gateway:
+      routes: #erro
+        - id: ms-products #erro
+          uri: lb://ms-products #erro
+          predicates: #erro (em todos do mesmo tipo abaixo são a mesma coisa)
+            - Path=/products/**
+        - id: ms-users
+          uri: lb://ms-users
+          predicates:
+            - Path=/users/**
+        - id: ms-notification
+          uri: lb://ms-notification
+          predicates:
+            - Path=/notification/**
+        - id: ms-authorization
+          uri: lb://ms-authorization
+          predicates:
+            - Path=/oauth/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: false
+logging:
+  level:
+    root: debug
+    org.springframework.cloud.netflix.eureka: debug
