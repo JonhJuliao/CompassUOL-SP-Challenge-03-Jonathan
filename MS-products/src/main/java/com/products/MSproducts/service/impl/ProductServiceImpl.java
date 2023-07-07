@@ -3,7 +3,6 @@ package com.products.MSproducts.service.impl;
 import com.products.MSproducts.entity.Category;
 import com.products.MSproducts.entity.Product;
 import com.products.MSproducts.exception.ResourceNotFoundException;
-import com.products.MSproducts.payload.CategoryDto;
 import com.products.MSproducts.payload.ProductDto;
 import com.products.MSproducts.repository.CategoryRepository;
 import com.products.MSproducts.repository.ProductRepository;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,8 +47,7 @@ public class ProductServiceImpl implements ProductService {
             product.setImgUrl("");
         }
         var savedProduct = productRepository.save(product);
-        var productResponse = mapToDto(savedProduct);
-        return productResponse;
+        return mapToDto(savedProduct);
     }
 
     @Override

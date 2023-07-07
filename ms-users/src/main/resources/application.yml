@@ -1,11 +1,11 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   mvc:
     format:
       date: iso
   application:
-    name: ms-products
+    name: ms-users
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: true

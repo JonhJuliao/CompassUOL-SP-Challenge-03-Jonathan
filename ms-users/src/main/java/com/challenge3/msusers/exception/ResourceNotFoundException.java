@@ -1,4 +1,4 @@
-package com.products.MSproducts.exception;
+package com.challenge3.msusers.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,12 +16,6 @@ public class ResourceNotFoundException extends RuntimeException {
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
-    }
-    public ResourceNotFoundException(String resourceName, String fieldName, String fieldStringValue) {
-        super(String.format("%s not found with %s : %s", resourceName, fieldName, fieldStringValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldStringValue = fieldStringValue;
     }
 
     public String getResourceName() {

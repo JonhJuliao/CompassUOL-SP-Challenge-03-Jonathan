@@ -1,10 +1,7 @@
 package com.products.MSproducts.controller;
 
-import com.products.MSproducts.payload.CategoryDto;
 import com.products.MSproducts.payload.ProductDto;
-import com.products.MSproducts.service.CategoryService;
 import com.products.MSproducts.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

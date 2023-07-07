@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: api-gateway #erro
+    name: api-gateway
   cloud:
     gateway:
-      routes: #erro
-        - id: ms-products #erro
-          uri: lb://ms-products #erro
-          predicates: #erro (em todos do mesmo tipo abaixo são a mesma coisa)
+      routes:
+        - id: ms-products
+          uri: lb://ms-products
+          predicates:
             - Path=/products/**
         - id: ms-users
           uri: lb://ms-users
@@ -23,15 +23,15 @@ spring:
           uri: lb://ms-authorization
           predicates:
             - Path=/oauth/**
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: false
-logging:
-  level:
-    root: debug
-    org.springframework.cloud.netflix.eureka: debug
+  eureka:
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://localhost:8761/eureka/
+    instance:
+      prefer-ip-address: false
+#logging:
+#  level:
+#    root: debug
+#    org.springframework.cloud.netflix.eureka: debug
