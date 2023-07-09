@@ -22,6 +22,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto createRole(RoleDto roleDto) {
         var role = mapToEntity(roleDto);
+        role.setName(role.getName().toUpperCase());
         var savedRole = roleRepository.save(role);
         return mapToDto(savedRole);
     }

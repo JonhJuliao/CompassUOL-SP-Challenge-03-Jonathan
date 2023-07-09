@@ -11,7 +11,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     password: root
-    url: jdbc:postgresql://localhost:5432/challenge3_notification
+    url: jdbc:postgresql://localhost:5432/challenge3
     username: postgres
   eureka:
     client:
