@@ -11,18 +11,15 @@ spring:
           uri: lb://ms-products
           predicates:
             - Path=/products/**
-        - id: ms-users
-          uri: lb://ms-users
-          predicates:
-            - Path=/users/**
-        - id: ms-notification
-          uri: lb://ms-notification
-          predicates:
-            - Path=/notification/**
         - id: ms-authorization
           uri: lb://ms-authorization
           predicates:
-            - Path=/oauth/**
+            - Path=/users/**, /oauth/**
+        - id: ms-notifications
+          uri: lb://ms-notifications
+          predicates:
+            - Path=/notification/**
+
   eureka:
     client:
       register-with-eureka: true

@@ -1,5 +1,6 @@
 package com.challenge3.msusers.service.impl;
 
+import com.challenge3.msusers.amqp.Producer;
 import com.challenge3.msusers.entity.Role;
 import com.challenge3.msusers.entity.User;
 import com.challenge3.msusers.exception.ResourceNotFoundException;
@@ -8,6 +9,7 @@ import com.challenge3.msusers.repository.RoleRepository;
 import com.challenge3.msusers.repository.UserRepository;
 import com.challenge3.msusers.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -22,12 +24,16 @@ public class UserServiceImpl implements UserService {
 
     private RoleRepository roleRepository;
 
+    private Producer producer;
+
     public UserServiceImpl(UserRepository userRepository,
                            ModelMapper mapper,
-                           RoleRepository roleRepository) {
+                           RoleRepository roleRepository,
+                           Producer producer) {
         this.userRepository = userRepository;
         this.mapper = mapper;
         this.roleRepository = roleRepository;
+        this.producer = producer;
     }
 
     @Override
@@ -41,6 +47,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(roles);
         var savedUser = userRepository.save(user);
+        producer.sendMessageUserCreated(userDto);
         return mapToDto(savedUser);
     }
 
@@ -87,4 +94,6 @@ public class UserServiceImpl implements UserService {
     private User mapToEntity(UserDto userDto){
         return mapper.map(userDto, User.class);
     }
+
+
 }
