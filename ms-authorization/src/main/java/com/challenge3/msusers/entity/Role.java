@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "roles")
 public class Role{
 
@@ -24,7 +23,7 @@ public class Role{
     private String name;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
 }

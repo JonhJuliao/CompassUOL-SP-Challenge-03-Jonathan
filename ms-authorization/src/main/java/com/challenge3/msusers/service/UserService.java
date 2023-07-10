@@ -19,4 +19,8 @@ public interface UserService {
     String login(LoginDto loginDto);
 
     void validateToken(String token) throws JwtTokenMalformedException, JwtTokenMissingException;
+
+    UserDto createAdmin(UserDto userDto);
+
+    UserDto updateUserToAdmin(UserDto userDto, Long id);
 }

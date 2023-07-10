@@ -17,10 +17,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     @Transactional
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/admin")
+    @Transactional
+    public ResponseEntity<UserDto> createAdmin(@RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.createAdmin(userDto), HttpStatus.CREATED);
     }
 
 
@@ -32,6 +38,13 @@ public class UserController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Long id){
+        var userResponse = userService.updateUser(userDto, id);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/admin/{id}")
+    @Transactional
+    public ResponseEntity<UserDto> updateUserToAdmin(@RequestBody UserDto userDto, @PathVariable Long id){
         var userResponse = userService.updateUser(userDto, id);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }

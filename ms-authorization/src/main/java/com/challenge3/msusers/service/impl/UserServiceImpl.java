@@ -95,11 +95,9 @@ public class UserServiceImpl implements UserService {
         }
         if(userDto.getRole() != null){
             Set<Role> roles = new HashSet<>();
-            for(Long roleId : userDto.getRole()){
-                Role role = roleRepository.findById(roleId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Role", "id", roleId));
-                roles.add(role);
-            }
+            Role role = roleRepository.findById(2L)
+                    .orElseThrow(() -> new ResourceNotFoundException("Role", "id", 2L));
+            roles.add(role);
             user.setRoles(roles);
         }
         var updatedUser = userRepository.save(user);
@@ -124,6 +122,55 @@ public class UserServiceImpl implements UserService {
     public void validateToken(String token) throws JwtTokenMalformedException, JwtTokenMissingException {
         log.info("Token {}", token);
         jwtUtil.validateToken(token);
+    }
+
+    @Override
+    public UserDto createAdmin(UserDto userDto) {
+        User admin = mapToEntity(userDto);
+        String encryptedPassword = passwordEncoder.encode(admin.getPassword());
+        admin.setPassword(encryptedPassword);
+        Set<Role> roles = new HashSet<>();
+        Role roleAdmin = roleRepository.findById(1L)
+                .orElseThrow(()-> new ResourceNotFoundException("Role", "id", 1L));
+        Role roleUser = roleRepository.findById(2L)
+                .orElseThrow(()-> new ResourceNotFoundException("Role", "id", 2L));
+        roles.add(roleAdmin);
+        roles.add(roleUser);
+        admin.setRoles(roles);
+        var savedUser = userRepository.save(admin);
+        producer.sendMessageUserCreated(userDto);
+        return mapToDto(savedUser);
+    }
+
+    @Override
+    public UserDto updateUserToAdmin(UserDto userDto, Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
+        if(userDto.getFirstName() != null){
+            user.setFirstName(userDto.getFirstName());
+        }
+        if(userDto.getLastName() != null){
+            user.setLastName(userDto.getLastName());
+        }
+        if(userDto.getEmail() != null){
+            user.setEmail(userDto.getEmail());
+        }
+        if(userDto.getPassword() != null){
+            String encryptedPassword = passwordEncoder.encode(userDto.getPassword());
+            user.setPassword(encryptedPassword);
+        }
+        if(userDto.getRole() != null){
+            Set<Role> roles = new HashSet<>();
+            Role roleAdmin = roleRepository.findById(1L)
+                    .orElseThrow(() -> new ResourceNotFoundException("Role", "id", 1L));
+            Role roleUser = roleRepository.findById(2L)
+                    .orElseThrow(() -> new ResourceNotFoundException("Role", "id", 2L));
+            roles.add(roleAdmin);
+            roles.add(roleUser);
+            user.setRoles(roles);
+        }
+        var updatedUser = userRepository.save(user);
+        return mapToDto(updatedUser);
     }
 
     private UserDto mapToDto(User user){

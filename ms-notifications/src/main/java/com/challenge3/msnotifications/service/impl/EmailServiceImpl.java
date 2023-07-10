@@ -2,7 +2,6 @@ package com.challenge3.msnotifications.service.impl;
 
 import com.challenge3.msnotifications.payload.EmailDto;
 import com.challenge3.msnotifications.service.EmailService;
-
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
