@@ -3,6 +3,7 @@ package com.challenge3.msusers.service.impl;
 import com.challenge3.msusers.amqp.Producer;
 import com.challenge3.msusers.entity.Role;
 import com.challenge3.msusers.entity.User;
+import com.challenge3.msusers.exception.InvalidLogin;
 import com.challenge3.msusers.exception.JwtTokenMalformedException;
 import com.challenge3.msusers.exception.JwtTokenMissingException;
 import com.challenge3.msusers.exception.ResourceNotFoundException;
@@ -58,11 +59,10 @@ public class UserServiceImpl implements UserService {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
         Set<Role> roles = new HashSet<>();
-        for(Long roleId : user.getRole()){
-            Role role = roleRepository.findById(roleId)
-                    .orElseThrow(()-> new ResourceNotFoundException("Role", "id", roleId));
-            roles.add(role);
-        }
+        Role role = roleRepository.findById(2L)
+                .orElseThrow(()-> new ResourceNotFoundException("Role", "id", 2L));
+        roles.add(role);
+
         user.setRoles(roles);
         var savedUser = userRepository.save(user);
         producer.sendMessageUserCreated(userDto);
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
     public String login(LoginDto loginDto) {
         User user = userRepository.getUserByEmail(loginDto.getEmail());
         if(user == null || !passwordEncoder.matches(loginDto.getPassword(), user.getPassword())){
-            new ResourceNotFoundException("User", "email", loginDto.getEmail());
+            new InvalidLogin("Invalid email or password");
         }
         return jwtUtil.generateToken(loginDto.getEmail());
     }

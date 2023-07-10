@@ -26,9 +26,9 @@ public class Producer {
         message.setFromName("Jonathan");
         message.setReplyTo("juliaodeveloper@gmail.com");
         message.setTo(userDto.getEmail());
-        message.setSubject("User Created");
-        message.setBody("User created successfully");
-        message.setContentType("User created or updated");
+        message.setSubject("User Created or Updated");
+        message.setBody("User created or updated successfully");
+        message.setContentType("User created or updated successfully");
 
         amqpTemplate.convertAndSend(rabbitMQConstants.exchange,rabbitMQConstants.routingkey,message);
     }
