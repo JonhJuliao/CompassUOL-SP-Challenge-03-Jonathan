@@ -36,9 +36,10 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
-    public void validateToken(final String token) throws JwtTokenMalformedException, JwtTokenMissingException {
+    public boolean validateToken(final String token) throws JwtTokenMalformedException, JwtTokenMissingException {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
         } catch (SignatureException ex) {
             throw new JwtTokenMalformedException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
@@ -49,6 +50,9 @@ public class JwtUtil {
             throw new JwtTokenMalformedException("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
             throw new JwtTokenMissingException("JWT claims string is empty.");
+        }
+        finally {
+            return false;
         }
     }
 

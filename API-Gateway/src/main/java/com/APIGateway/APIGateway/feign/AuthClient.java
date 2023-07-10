@@ -2,7 +2,6 @@ package com.APIGateway.APIGateway.feign;
 
 import com.APIGateway.APIGateway.payload.TokenDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -6,6 +6,7 @@ import com.challenge3.msusers.payload.LoginDto;
 import com.challenge3.msusers.payload.TokenDto;
 import com.challenge3.msusers.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class AuthorizationController {
         return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
     }
 
-    @PostMapping("/validate")
+    @PostMapping(value = "/validate", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> validateToken(@RequestBody TokenDto token) throws JwtTokenMalformedException, JwtTokenMissingException {
         userService.validateToken(token.getToken());
         return ResponseEntity.noContent().build();

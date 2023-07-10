@@ -1,5 +1,6 @@
 package com.challenge3.msusers.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -44,7 +45,7 @@ public class User{
     private Set<Role> roles = new HashSet<>();
 
     @Transient
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     private Set<Long> role = new HashSet<>();
 
 }
