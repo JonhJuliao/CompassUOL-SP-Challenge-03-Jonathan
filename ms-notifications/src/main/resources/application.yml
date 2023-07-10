@@ -1,0 +1,37 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: ms-notifications
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: root
+    url: jdbc:postgresql://localhost:5432/challenge3
+    username: postgres
+  eureka:
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://localhost:8761
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: rabbit
+  password: rabbit
+  queue: email
+  exchange: myexchange
+  routingkey: email
+  virtualhost: /
+  reply:
+    timeout: 60000
+  concurrent:
+    consumers: 1
+  max:
+    concurrent:
+      consumers: 1
