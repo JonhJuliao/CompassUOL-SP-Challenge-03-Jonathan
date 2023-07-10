@@ -29,3 +29,8 @@ O token que gerei não funciona na parte de authorization do Postamn,
 pois não se trata de bearer token.
 Portanto para autenticar utilizando o token no Postman, vá até Headers, na Key selecione Authorization
 e em value adicione o token gerado no login.
+
+### Sobre os testes
+Não conseguir ter tempo para fazer tudo e também implementar os testes.
+Como essa parte de testes já foi avaliada no desafio passado, resolvir deixar por último justamente
+para caso não desse tempo, ser a "única" coisa que ficou faltando.
